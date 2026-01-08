@@ -1,6 +1,6 @@
 {
   "name": "Sangwari News AI",
-  "description": "A live talking avatar that delivers Chhattisgarh news in the local Chhattisgarhi language.",
+  "description": "A live talking avatar that delivers news in any Indian language.",
   "requestFramePermissions": [
     "microphone"
   ]

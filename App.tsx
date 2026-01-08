@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useLiveSession } from './hooks/useLiveSession';
 import { Avatar } from './components/Avatar';
 import { Controls } from './components/Controls';
@@ -14,6 +14,8 @@ const App: React.FC = () => {
     toggleMute 
   } = useLiveSession();
   
+  // Default to Chhattisgarhi as per requirement
+  const [selectedLanguage, setSelectedLanguage] = useState("Chhattisgarhi");
   const transcriptContainerRef = useRef<HTMLDivElement>(null);
 
   // Auto-scroll transcript
@@ -22,6 +24,10 @@ const App: React.FC = () => {
       transcriptContainerRef.current.scrollTop = transcriptContainerRef.current.scrollHeight;
     }
   }, [transcriptions]);
+
+  const handleConnect = () => {
+    connect(selectedLanguage);
+  };
 
   return (
     <div className="min-h-screen flex flex-col items-center bg-gray-900 text-gray-100 overflow-hidden relative font-sans">
@@ -42,7 +48,7 @@ const App: React.FC = () => {
               <h1 className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400">
                 Sangwari News AI
               </h1>
-              <p className="text-xs text-green-400">Live from Chhattisgarh</p>
+              <p className="text-xs text-green-400">Live Chhattisgarh News Avatar</p>
             </div>
          </div>
          {state.isConnected && (
@@ -69,7 +75,9 @@ const App: React.FC = () => {
                isConnected={state.isConnected}
                isConnecting={state.isConnecting}
                isMuted={state.isMuted}
-               onConnect={connect}
+               selectedLanguage={selectedLanguage}
+               onLanguageChange={setSelectedLanguage}
+               onConnect={handleConnect}
                onDisconnect={disconnect}
                onToggleMute={toggleMute}
              />
@@ -95,7 +103,7 @@ const App: React.FC = () => {
              >
                 {transcriptions.length === 0 ? (
                   <p className="text-gray-500 text-sm italic text-center mt-10">
-                    Ask me: "What is the latest news in Raipur?"
+                    Ask me: "What is the latest news in Chhattisgarh?"
                   </p>
                 ) : (
                   transcriptions.map((t) => (
